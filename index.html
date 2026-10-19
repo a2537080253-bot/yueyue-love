@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>给悦悦宝宝的温柔补给站 💗</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; overflow: hidden;
+  font-family: "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg,#fff0f5,#f1eaff,#e4f8ff);
+  color: #76516d;
+}
+header { text-align: center; padding: 35px 16px 12px; }
+h1 { font-size: 25px; color: #d96b9a; }
+.subtitle { font-size: 14px; line-height: 1.8; }
+#stage { position: relative; height: 70vh; }
+.popup {
+  position: absolute; width: min(82vw, 310px);
+  padding: 19px 18px; border-radius: 20px;
+  box-shadow: 0 12px 30px #9c72952a;
+  animation: pop .45s cubic-bezier(.2,1.5,.5,1) both;
+  border: 2px solid #ffffffb0;
+}
+.popup .emoji { font-size: 27px; }
+.popup p { margin: 10px 0 0; font-size: 16px; line-height: 1.8; }
+.pink { background: #ffe0ec; }
+.yellow { background: #fff1c9; }
+.blue { background: #dff3ff; }
+.purple { background: #eee2ff; }
+.green { background: #dcf8e9; }
+.peach { background: #ffe5d8; }
+@keyframes pop {
+  from { opacity: 0; transform: scale(.5) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+#next {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  border: none; border-radius: 30px;
+  padding: 14px 28px; background: #e875a3;
+  color: white; font-size: 16px;
+  box-shadow: 0 6px 20px #e875a355;
+}
+#next:active { opacity: .8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>💗 悦悦宝宝的温柔补给站 💗</h1>
+  <div class="subtitle">
+    今天也辛苦啦。<br>
+    这里有一些想悄悄告诉你、希望你记住的话。
+  </div>
+</header>
+<div id="stage"></div>
+<button id="next">再收下一份温柔 ✨</button>
+
+<script>
+const messages = [
+  ["🌷","悦悦宝宝，今天也辛苦啦！","pink"],
+  ["☀️","累了就休息一下，不用什么都做到完美。","yellow"],
+  ["🫂","你已经很努力了，记得也抱抱自己。","purple"],
+  ["🌈","慢慢来，你的节奏刚刚好。","blue"],
+  ["💌","不开心的时候，也可以放心说出来。","pink"],
+  ["🍬","今天的你，也值得被好好疼爱。","peach"],
+  ["⭐","不要因为一次失败，就否定闪闪发光的自己。","yellow"],
+  ["🐻","不必一直坚强，偶尔脆弱也没关系。","purple"],
+  ["🌻","希望你每天都能拥有一点小小的快乐。","yellow"],
+  ["🧸","别忘了按时吃饭，好好睡觉，照顾好自己。","peach"],
+  ["💖","悦悦宝宝，你的感受很重要。","pink"],
+  ["☁️","烦恼可以慢慢解决，不用一下子承担所有事。","blue"],
+  ["🍀","你不需要和任何人比较，做自己就很好。","green"],
+  ["🎀","希望你被温柔以待，也学会温柔地对待自己。","pink"],
+  ["🌙","今天不够顺利也没关系，明天可以重新开始。","purple"],
+  ["🐣","哪怕只前进了一小步，也值得为自己开心。","yellow"],
+  ["💐","请相信，你身上有很多自己还没发现的美好。","peach"],
+  ["🫧","允许自己偶尔停下来，休息也是生活的一部分。","blue"],
+  ["❤️","你不必取悦所有人，自己的感受也很重要。","pink"],
+  ["🌼","希望你遇到困难时，也别忘记自己的勇气。","yellow"],
+  ["🪄","生活偶尔会有阴天，但你依然值得所有美好。","purple"],
+  ["🤍","无论今天发生了什么，都请记得善待自己。","green"],
+  ["💗","悦悦宝宝，希望你每天都能多喜欢自己一点。","pink"]
+];
+
+const stage = document.getElementById("stage");
+let index = 0;
+
+function showMessage() {
+  if (index >= messages.length) {
+    stage.innerHTML = "";
+    const end = document.createElement("div");
+    end.className = "popup pink";
+    end.style.cssText =
+      "left:50%;top:25%;transform:translateX(-50%);text-align:center";
+    end.innerHTML =
+      "<div class='emoji'>💝</div><p>悦悦宝宝，所有温柔都送给你。<br>希望你一直平安、快乐，做自己喜欢的事。<br>记得，你值得被爱。</p>";
+    stage.appendChild(end);
+    document.getElementById("next").textContent = "再看一次 💗";
+    index = 0;
+    return;
+  }
+
+  const [emoji, text, color] = messages[index++];
+  const card = document.createElement("div");
+  card.className = "popup " + color;
+  card.style.left = (4 + Math.random() * 35) + "%";
+  card.style.top = (Math.random() * 65) + "%";
+  card.style.zIndex = index;
+  card.innerHTML = "<div class='emoji'>" + emoji +
+    "</div><p></p>";
+  card.querySelector("p").textContent = text;
+  stage.appendChild(card);
+
+  while (stage.children.length > 5) {
+    stage.removeChild(stage.firstElementChild);
+  }
+
+  if (index === messages.length) {
+    document.getElementById("next").textContent = "收下最后一份温柔 💗";
+  }
+}
+
+document.getElementById("next").addEventListener("click", () => {
+  if (index === 0 && stage.children.length) {
+    stage.innerHTML = "";
+    document.getElementById("next").textContent = "再收下一份温柔 ✨";
+  }
+  showMessage();
+});
+
+showMessage();
+setInterval(() => {
+  if (index < messages.length) showMessage();
+}, 2200);
+</script>
+</body>
+</html>
